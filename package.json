@@ -11,12 +11,15 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "ejs": "~2.5.2",
+    "email-templates": "^2.5.4",
     "express": "~4.14.0",
     "morgan": "~1.7.0",
     "nodemailer": "^2.6.4",
     "nodemailer-ses-transport": "^1.5.0",
     "pdfmake": "^0.1.18",
-    "serve-favicon": "~2.3.0"
+    "righto": "^2.2.1",
+    "serve-favicon": "~2.3.0",
+    "winston": "^2.3.0"
   },
   "devDependencies": {
     "eslint": "~3.2.2"

@@ -4,9 +4,31 @@ const fs = require('fs');
 const express = require('express');
 const router = express.Router();
 
-const PdfPrinter = require('pdfmake/src/printer.js');
+const PdfPrinter = require('pdfmake');
 
 router.post('/', createPdfRoute);
+
+module.exports = {
+	router,
+	create: createPDF,
+};
+
+function createPdfRoute (req, res) {
+
+	const items = req.body.items;
+	const receiptNumber = req.body.receipt_number;
+
+	createPDF(items, receiptNumber, (err, result) => {
+		if (err) {
+			console.log(err);
+		} else {
+			res.json({
+				done: true,
+				result,
+			});
+		}
+	});
+}
 
 const fonts = {
 	Roboto: {
@@ -23,10 +45,7 @@ function decimalPlaces (num, dp) {
 	return (Math.round(num * pow) / pow).toFixed(dp);
 }
 
-function createPdfRoute (req, res) {
-
-	const items = req.body.items;
-	const receiptNumber = req.body.receipt_number;
+function createPDF (items, receiptNumber, errback) {
 	const ts = Date.now();
 
 	const tableBody = [];
@@ -123,15 +142,12 @@ function createPdfRoute (req, res) {
 
 	const fileName = `public/pdf/pdfMake-${Date.now()}.pdf`;
 	const writeStream = fs.createWriteStream(fileName);
-	writeStream.on('finish', () => {
-		res.json({
-			done: true,
-			fileName,
-		});
-	});
 	const pdfDoc = printer.createPdfKitDocument(docDefinition);
 	pdfDoc.pipe(writeStream);
-	pdfDoc.end();
-}
+	console.log('hello');
 
-module.exports = router;
+	pdfDoc.end();
+	errback(undefined, {
+		fileName,
+	});
+}

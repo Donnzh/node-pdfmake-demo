@@ -8,7 +8,8 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 const index = require('./routes/index');
-const pdfmake = require('./routes/PDFmake');
+const emails = require('./routes/emails');
+const pdfmake = require('./routes/PDFmake').router;
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
+app.use('/emails', emails);
 app.use('/pdfmake', pdfmake);
 	// catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -36,7 +38,7 @@ app.use((req, res, next) => {
 });
 
 // error handler
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
     // set locals, only providing error in development
 	res.locals.message = err.message;
 	res.locals.error = req.app.get('env') === 'development' ? err : {};
