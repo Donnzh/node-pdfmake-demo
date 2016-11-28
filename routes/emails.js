@@ -44,8 +44,12 @@ function emailSendingRoute (req, res) {
 		// template parameter, as the templs engined by ejs,
 		//you can setup your own porperites there and pass the data from req.body
 		const templateData = {
-			name: {
-				name: mailInfo.userName,
+			detail: {
+				userName: mailInfo.userName,
+				productName: mailInfo.productName,
+				content: mailInfo.content,
+				footNote: mailInfo.footNote,
+				senderName: mailInfo.senderName,
 			},
 		};
 
@@ -58,7 +62,7 @@ function emailSendingRoute (req, res) {
 			return;
 		}
 		const mailData = {
-			from: 'noreply@7rio2016.com.au',
+			from: mailInfo.from,
 			to: mailInfo.to,
 			cc: mailInfo.cc,
 			bcc: mailInfo.bcc,
@@ -69,11 +73,18 @@ function emailSendingRoute (req, res) {
 					path: pdfPath,
 				},
 				{
-					filename: 'githubLogo.png',
-					path: 'routes/githubLogo.png',
+					filename: 'example_header_image.jpg',
+					path: 'routes/example_header_image.jpg',
 					//same cid value as in the html template img src,
 					//the cid value should be as unique as possible
-					cid: 'uniqueKey:kreata.ee',
+					cid: 'uniqueKey:example_header_image:kreata.ee1',
+				},
+				{
+					filename: 'example_hero_image.jpg',
+					path: 'routes/example_hero_image.jpg',
+					//same cid value as in the html template img src,
+					//the cid value should be as unique as possible
+					cid: 'uniqueKey:example_hero_image:kreata.ee2',
 				},
 			],
 		};

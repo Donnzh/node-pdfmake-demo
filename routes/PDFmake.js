@@ -144,8 +144,6 @@ function createPDF (items, receiptNumber, errback) {
 	const writeStream = fs.createWriteStream(fileName);
 	const pdfDoc = printer.createPdfKitDocument(docDefinition);
 	pdfDoc.pipe(writeStream);
-	console.log('hello');
-
 	pdfDoc.end();
 	errback(undefined, {
 		fileName,
