@@ -1,1 +1,1 @@
-a example of create pdf receipt using node library makePDF
+a simple edm server of generate pdf receipt and sending emails. using pdfmake and nodemailer, edm templates using zurb
